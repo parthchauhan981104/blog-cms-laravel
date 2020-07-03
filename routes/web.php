@@ -22,4 +22,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 //Automatically match all routes to category controller methods
-Route::resource('categories', 'CategoriesController'); 
+Route::resource('categories', 'CategoriesController');
+Route::resource('posts', 'PostsController');
+
+Route::get('trashed-posts', 'PostsController@trashed')->name('trashed-posts.index');

@@ -37,7 +37,6 @@ class CategoriesController extends Controller
      */
     public function store(CreateCategoryRequest $request)  //validation rules in separate Requests class, keep controller clean
     {
-
         Category::create(['name' => $request->name]);
 
         session()->flash('success', 'Category created successfully');
@@ -65,7 +64,7 @@ class CategoriesController extends Controller
     public function edit(Category $category) //route model binding
     {
         //reuse view to keep number of views low
-        return view('categories.create')->with('category', $category); 
+        return view('categories.create')->with('category', $category);
     }
 
     /**
@@ -99,6 +98,5 @@ class CategoriesController extends Controller
         session()->flash('success', 'Category deleted successfully');
 
         return redirect(route('categories.index'));
-
     }
 }

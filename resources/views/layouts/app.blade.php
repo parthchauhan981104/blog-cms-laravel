@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/theme.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -90,10 +91,15 @@
                         <div class="col-md-4"> {{-- For navigation --}}
                             <ul class="list-group">
                                 <li class="list-group-item">
-                                    <a href="">Posts</a>
+                                    <a href="{{route('posts.index')}}">Posts</a>
                                 </li>
                                 <li class="list-group-item">
                                     <a href="{{route('categories.index')}}">Categories</a>
+                                </li>
+                            </ul>
+                            <ul class="list-group mt-4">
+                                <li class="list-group-item">
+                                    <a href="{{route('trashed-posts.index')}}">Trashed Posts</a>
                                 </li>
                             </ul>
                         </div>

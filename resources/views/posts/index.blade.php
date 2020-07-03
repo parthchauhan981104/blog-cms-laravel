@@ -3,38 +3,54 @@
 @section('content')
 
 <div class="d-flex justify-content-end mb-2">
-	<a href="{{route('categories.create')}}" class="btn btn-success">
-		Add Category
+	<a href="{{route('posts.create')}}" class="btn btn-success">
+		Add Post
 	</a>
 </div>
 
 
 <div class="card card-default">
 	<div class="card-header">
-		Categories
+		Posts
 	</div>
 	<div class="card-body">
-		@if($categories->count() > 0)
+		@if($posts->count() > 0)
 		<table class="table">
 			<thead>
-				<th>Name</th>
+				<th>Image</th>
+				<th>Title</th>
+				<th></th>
+				<th></th> 
 			</thead>
 			<tbody>
-				@foreach($categories as $category)
+				@foreach($posts as $post)
 					<tr>
 						<td>
-							{{$category->name}}	
+							{{--using asset method gives full path--}}
+							<img class="post-img" src="{{asset('/storage')}}/{{$post->image}}" alt="">
 						</td>
 						<td>
-							<a href="{{route('categories.edit', $category->id)}}" class="btn btn-info btn-sm">Edit</a>
-							<button class="btn btn-danger btn-sm" onclick="handleDelete({{$category->id}})">Delete</button>
+							{{$post->title}}
 						</td>
+						<td>
+							@unless($post->trashed())
+							<a href="{{route('posts.edit', $post->id)}}" class="btn btn-info btn-sm">Edit</a>
+							@endunless
+						</td>
+						<td>
+							<form action="{{route('posts.destroy', $post->id)}}" method="post">
+								@csrf
+								@method('DELETE')
+								{{--just trash post and not delete permanently from database--}}
+							<button type="submit" class="btn btn-danger btn-sm">{{$post->trashed() ? 'Delete' : 'Trash'}}</button>
+							</form>
+						</td> 
 					</tr>
 				@endforeach
 			</tbody>
 		</table> 
 		@else
-			<h3 class="text-center">No Categories to show</h3>
+			<h3 class="text-center">No Posts to show</h3>
 		@endif
 		
 		<form action="" method="post" id="deleteCategoryForm">
