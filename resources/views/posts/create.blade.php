@@ -29,25 +29,48 @@
 			</div>
 			<div class="form-group">
 				<label for="description">Description</label>
-				<textarea id="description" class="form-control" name="description" cols="5" rows="3" value="{{isset($post) ? $post->description : ''}}"></textarea>
+				<textarea id="description" class="form-control" name="description" cols="5" rows="3" >{{isset($post) ? $post->description : ''}}</textarea>
 			</div>
 			<div class="form-group">
 				<label for="content">Content</label>
-				<textarea id="content" class="form-control" name="content" cols="5" rows="5" value="{{isset($post) ? $post->content : ''}}"></textarea>
+				<input id="content" type="hidden" name="content" value="{{isset($post) ? $post->content : ''}}">
+  				<trix-editor input="content"></trix-editor>
 			</div>
 			<div class="form-group">
 				<label for="published_at">Published At</label>
 				<input type="text" id="published_at" class="form-control" name="published_at" value="{{isset($post) ? $post->published_at : ''}}">
 			</div>
+
+			@if(isset($post))
+				<div class="form-group">
+					<img src="{{asset('/storage')}}/{{$post->image}}" class="w-100" alt="">
+				</div>
+			@endif
 			<div class="form-group">
 				<label for="image">Image</label>
 				<input type="file" id="image" class="form-control" name="image">
 			</div>
 			<div class="form-group row justify-content-center">
-				<button type="submit" class="btn btn-success mt-3">{{isset($post) ? 'Update Post' : 'Add Post'}}</button>
+				<button type="submit" class="btn btn-success mt-3">{{isset($post) ? 'Update Post' : 'Create Post'}}</button>
 			</div>
 		</form>
 	</div>
 </div>
 
 @endsection
+
+@section('scripts')
+{{-- Trix editor for filling stylized content and Flatpickr for date/time --}}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.3/trix.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	<script>
+		flatpickr('#published_at', {
+			enableTime: true
+		})
+	</script>
+@endsection('scripts')
+
+@section('css')
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.3/trix.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+@endsection('css')
