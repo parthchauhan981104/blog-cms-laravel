@@ -8,15 +8,7 @@
 		{{isset($post) ? 'Edit Post' : 'Create Post'}}
 	</div>
 	<div class="card-body">
-		@if($errors->any())
-			<div class="alert alert-danger">
-				<ul class="list-group">
-					@foreach($errors->all() as $error)
-						<li class="list-group-item text-danger">{{$error}}</li>
-					@endforeach
-				</ul>
-			</div>
-		@endif
+		@include('partials.errors')
 		<form action="{{isset($post) ? route('posts.update', $post->id) : route('posts.store')}}" method="post" enctype="multipart/form-data">
 			@csrf
 			@if(isset($post))
@@ -50,6 +42,40 @@
 				<label for="image">Image</label>
 				<input type="file" id="image" class="form-control" name="image">
 			</div>
+			<div class="form-group">
+				<label for="category_id">Category</label>
+				<select name="category_id" id="category" class="form-control">
+					@foreach($categories as $category)
+					<option value="{{$category->id}}"
+						@if(isset($post))
+							@if($category->id === $post->category_id)
+							selected
+							@endif
+						@endif
+					>
+						{{$category->name}}
+					</option>
+					@endforeach
+				</select>
+			</div>
+			@if($tags->count() > 0)
+			<div class="form-group">
+				<label for="tags">Tags</label>
+				<select name="tags[]" id="tags" class="form-control tags-selector" multiple>
+					@foreach($tags as $tag)
+					<option value="{{$tag->id}}"
+						@if(isset($post))
+							@if($post->hasTag($tag->id))
+								selected
+							@endif
+						@endif
+							>
+						{{$tag->name}}
+					</option>
+					@endforeach
+				</select>
+			</div>
+			@endif
 			<div class="form-group row justify-content-center">
 				<button type="submit" class="btn btn-success mt-3">{{isset($post) ? 'Update Post' : 'Create Post'}}</button>
 			</div>
@@ -58,19 +84,26 @@
 </div>
 
 @endsection
-
+ 
 @section('scripts')
-{{-- Trix editor for filling stylized content and Flatpickr for date/time --}}
+{{-- Trix editor for filling stylized content, Flatpickr for date/time, select2 for multiple select tags --}}
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.3/trix.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 	<script>
 		flatpickr('#published_at', {
 			enableTime: true
 		})
 	</script>
+	<script>
+		$(document).ready(function() {
+    		$('.tags-selector').select2();
+		});
+	</script>
 @endsection('scripts')
 
 @section('css')
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.3/trix.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 @endsection('css')

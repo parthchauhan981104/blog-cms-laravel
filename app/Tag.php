@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Post;
 
-class Category extends Model
+class Tag extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -16,7 +16,7 @@ class Category extends Model
 
     public function posts()
     {
-    	return $this->hasMany(Post::class);
+        return $this->belongsTomany(Post::class);
     }
 
 }

@@ -19,13 +19,17 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware(['auth'])->group(function() {
 
-//Automatically match all routes to category controller methods
-Route::resource('categories', 'CategoriesController');
-Route::resource('posts', 'PostsController');
+	Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('trashed-posts', 'PostsController@trashed')->name('trashed-posts.index');
+	//Automatically match all routes to category controller methods
+	Route::resource('categories', 'CategoriesController');
+	Route::resource('posts', 'PostsController')->middleware('auth');
+	Route::resource('tags', 'TagsController');
 
-Route::put('restore-post/{post}', 'PostsController@restorePost')->name('restore-post'); //using get is not good for this as then anyone could restore any post
+	Route::get('trashed-posts', 'PostsController@trashed')->name('trashed-posts.index');
 
+	Route::put('restore-post/{post}', 'PostsController@restorePost')->name('restore-post'); //using get is not good for this as then anyone could restore any post
+
+});
