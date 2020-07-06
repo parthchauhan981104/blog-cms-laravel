@@ -33,3 +33,15 @@ Route::middleware(['auth'])->group(function() {
 	Route::put('restore-post/{post}', 'PostsController@restorePost')->name('restore-post'); //using get is not good for this as then anyone could restore any post
 
 });
+
+Route::middleware(['auth', 'admin'])->group(function() {
+
+	Route::get('users', 'UsersController@index')->name('users.index');
+
+	Route::post('users/{user}/make-admin', 'UsersController@makeAdmin')->name('users.make-admin');
+
+	Route::get('users/profile', 'UsersController@edit')->name('users.edit-profile');
+
+	Route::put('users/profile', 'UsersController@update')->name('users.update-profile');
+
+});

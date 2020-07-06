@@ -3,6 +3,12 @@
 	max-width: 120px;
 }
 
+.user-img{
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+}
+
 .btn-info{
 	color: white;
 }
