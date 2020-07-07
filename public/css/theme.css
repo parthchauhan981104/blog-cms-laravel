@@ -9,6 +9,41 @@
 	border-radius: 50%;
 }
 
+.logo-img{
+	height: 40px;
+	width: 40px;
+}
+
+.post-img-holder {
+   width: 100%;
+   height: 250px;
+   position: relative;
+}
+
+.main-post-img{
+	height: 250px;
+	width:100%;
+}
+
+.post-dt-holder{
+	
+	float: left;
+	position: absolute;
+	left: 0px;
+	top: 250px;
+	height:18px;
+	z-index: 1000;
+	background-color: black;
+	color: white;
+	padding:3px;
+	font-weight: bold;
+}
+
+/*.post-time{
+	text-size:0.5rem !important;
+}*/
+
+
 .btn-info{
 	color: white;
 }
