@@ -6,7 +6,7 @@
 /theme
 .env
 .env.backup
-.README.md
+README.md
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
