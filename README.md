@@ -15,7 +15,7 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-Blog CMS App
+## Blog CMS App
 Fully functional blog with content management for authenticated users in two roles - Admins and Writers. Posts with Categories and Tags. 3rd party services used - Trix editor, Addthis, Gravatar, Disqus, Flatpickr, Select2.
 
 Deployed at - http://parth11chauhan.herokuapp.com
