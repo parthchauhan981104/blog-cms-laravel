@@ -11,7 +11,7 @@ class AddSoftDeletesToPostsTable extends Migration
      *
      * @return void
      */
-        public function up()
+    public function up()
     {   //modifies the posts table
         Schema::table('posts', function (Blueprint $table) {
             $table->softDeletes(); //add this column, preserve data

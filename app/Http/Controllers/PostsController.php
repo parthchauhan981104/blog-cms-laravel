@@ -9,13 +9,11 @@ use App\Tag;
 use App\Http\Requests\Posts\CreatePostsRequest;
 use App\Http\Requests\Posts\UpdatePostRequest;
 
-
 class PostsController extends Controller
 {
-    
     public function __construct()
     {
-       $this->middleware('VerifyCategoriesCount')->only(['create', 'store']); //apply middleware only on these routes
+        $this->middleware('VerifyCategoriesCount')->only(['create', 'store']); //apply middleware only on these routes
     }
 
     /**
@@ -61,7 +59,7 @@ class PostsController extends Controller
             'user_id' => auth()->user()->id
         ]);
 
-        if($request->tags){
+        if ($request->tags) {
             $post->tags()->attach($request->tags);
         }
 
@@ -104,16 +102,14 @@ class PostsController extends Controller
         //only store these for security purposes
         $data = $request->only(['title', 'description', 'published_at', 'content', 'category_id']);
 
-        if($request->hasFile('image')){
-
+        if ($request->hasFile('image')) {
             $image = $request->image->store('posts');
             $post->deleteImage; //used method in Post model
 
             $data['image'] = $image;
-
         }
 
-        if($request->tags){
+        if ($request->tags) {
             $post->tags()->sync($request->tags);
         }
 
@@ -133,15 +129,14 @@ class PostsController extends Controller
      */
     public function destroy($id) //cant use route model binding here as trashed posts cant be found this way
     {
-        
         $post = Post::withTrashed()->where('id', $id)->firstOrFail();
 
-        if($post->trashed()) {
+        if ($post->trashed()) {
             //permanently delete and delete image too
             $post->deleteImage;
             $post->forceDelete();
             session()->flash('success', 'Post deleted successfully.');
-        } else{
+        } else {
             //soft delete
             $post->delete();
             session()->flash('success', 'Post trashed successfully.');

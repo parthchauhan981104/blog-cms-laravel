@@ -34,7 +34,7 @@ class Post extends Model
     
     public function deleteImage()
     {
-    	Storage::delete($this->image);
+        Storage::delete($this->image);
     }
 
     public function user()
@@ -64,18 +64,17 @@ class Post extends Model
 
     public function scopePublished($query)
     {
-      return $query->where('published_at', '<=', now());
+        return $query->where('published_at', '<=', now());
     }
 
     public function scopeSearched($query) //a chainable method to the queryBuilder
     {
-      $search = request()->query('search');
+        $search = request()->query('search');
 
-      if (!$search) {
-        return $query->published();
-      }
+        if (!$search) {
+            return $query->published();
+        }
 
-      return $query->published()->where('title', 'LIKE', "%{$search}%");
+        return $query->published()->where('title', 'LIKE', "%{$search}%");
     }
-
 }

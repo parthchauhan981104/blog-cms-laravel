@@ -23,7 +23,7 @@ class UpdateTagRequest extends FormRequest
      */
     public function rules()
     {
-       return [
+        return [
             'name' => 'required|unique:tags'
         ];
     }

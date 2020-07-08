@@ -16,7 +16,7 @@ class VerifyIsAdmin
      */
     public function handle($request, Closure $next)
     {
-        if(!auth()->user()->isAdmin()){ //if not admin
+        if (!auth()->user()->isAdmin()) { //if not admin
             return redirect(route('home'));
         }
         return $next($request);

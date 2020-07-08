@@ -15,16 +15,13 @@ class UsersTableSeeder extends Seeder
     {
         $user = User::where('email', 'pc828@snu.edu.in')->first();
 
-        if(!$user){
-
-        	User::create([
-        		'name' => 'Parth Chauhan',
-        		'email' => 'pc828@snu.edu.in',
-        		'role' => 'admin',
-        		'password' => Hash::make('password')
-        	]);
-
-        } 
+        if (!$user) {
+            User::create([
+                'name' => 'Parth Chauhan',
+                'email' => 'pc828@snu.edu.in',
+                'role' => 'admin',
+                'password' => Hash::make('password')
+            ]);
+        }
     }
-    
 }

@@ -22,29 +22,25 @@ Route::get('blog/tags/{tag}', [PostsController::class, 'tag'])->name('blog.tag')
 
 Auth::routes();
 
-Route::middleware(['auth'])->group(function() {
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', 'HomeController@index')->name('home');
 
-	Route::get('/home', 'HomeController@index')->name('home');
+    //Automatically match all routes to category controller methods
+    Route::resource('categories', 'CategoriesController');
+    Route::resource('posts', 'PostsController')->middleware('auth');
+    Route::resource('tags', 'TagsController');
 
-	//Automatically match all routes to category controller methods
-	Route::resource('categories', 'CategoriesController');
-	Route::resource('posts', 'PostsController')->middleware('auth');
-	Route::resource('tags', 'TagsController');
+    Route::get('trashed-posts', 'PostsController@trashed')->name('trashed-posts.index');
 
-	Route::get('trashed-posts', 'PostsController@trashed')->name('trashed-posts.index');
-
-	Route::put('restore-post/{post}', 'PostsController@restorePost')->name('restore-post'); //using get is not good for this as then anyone could restore any post
-
+    Route::put('restore-post/{post}', 'PostsController@restorePost')->name('restore-post'); //using get is not good for this as then anyone could restore any post
 });
 
-Route::middleware(['auth', 'admin'])->group(function() {
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('users', 'UsersController@index')->name('users.index');
 
-	Route::get('users', 'UsersController@index')->name('users.index');
+    Route::post('users/{user}/make-admin', 'UsersController@makeAdmin')->name('users.make-admin');
 
-	Route::post('users/{user}/make-admin', 'UsersController@makeAdmin')->name('users.make-admin');
+    Route::get('users/profile', 'UsersController@edit')->name('users.edit-profile');
 
-	Route::get('users/profile', 'UsersController@edit')->name('users.edit-profile');
-
-	Route::put('users/profile', 'UsersController@update')->name('users.update-profile');
-
+    Route::put('users/profile', 'UsersController@update')->name('users.update-profile');
 });
